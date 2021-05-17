@@ -1,0 +1,21 @@
+{
+  "name": "sun/bitrix.module",
+  "description": "Template for bitrix module",
+  "authors": [
+    {
+      "name": "Kudryavtsev Sergey",
+      "email": "invaderman@mail.ru"
+    }
+  ],
+  "require": {
+    "php": "^7.4|^8.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Sun\\BitrixModule\\": "src/"
+    }
+  },
+  "require-dev": {
+    "matiaspub/bx-api-docs": "^16.5"
+  }
+}
