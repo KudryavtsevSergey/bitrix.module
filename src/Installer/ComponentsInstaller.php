@@ -31,10 +31,12 @@ class ComponentsInstaller extends AbstractInstallerDecorator
     public function install(): void
     {
         array_walk($this->components, function (string $component): void {
-            $pathFrom = sprintf('%s/local/modules/%s/install/components/%s/%s', $this->documentRoot, $this->moduleId, $this->namespace, $component);
+            $pathFrom = sprintf('%s/local/modules/%s/install/components/%s', $this->documentRoot, $this->moduleId, $component);
             $pathTo = sprintf('%s/local/components/%s/%s', $this->documentRoot, $this->namespace, $component);
+
             CopyDirFiles($pathFrom, $pathTo, true, true);
         });
+
         parent::install();
     }
 

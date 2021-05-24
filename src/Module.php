@@ -12,6 +12,8 @@ interface Module
 
     public function getNamespace(): string;
 
+    public function getModuleGroupRights(): string;
+
     public function getDescription(): string;
 
     public function getVersion(): Version;

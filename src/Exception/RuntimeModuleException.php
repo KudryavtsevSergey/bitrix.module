@@ -2,13 +2,12 @@
 
 namespace Sun\BitrixModule\Exception;
 
-use RuntimeException;
 use Throwable;
 
-class RuntimeModuleException extends RuntimeException
+class RuntimeModuleException extends AbstractInternalException
 {
-    public function __construct(Throwable $previous)
+    public function __construct(string $message, ?Throwable $previous = null)
     {
-        parent::__construct($previous->getMessage(), 0, $previous);
+        parent::__construct($message, 0, $previous);
     }
 }

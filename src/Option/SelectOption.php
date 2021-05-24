@@ -2,6 +2,8 @@
 
 namespace Sun\BitrixModule\Option;
 
+use Sun\BitrixModule\Enum\OptionTypeEnum;
+
 class SelectOption extends AbstractOption
 {
     /**
@@ -30,6 +32,6 @@ class SelectOption extends AbstractOption
 
     public function getType(): string
     {
-        return OptionType::SELECT;
+        return OptionTypeEnum::SELECT;
     }
 }

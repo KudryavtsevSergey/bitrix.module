@@ -11,11 +11,10 @@ class SuccessRedirectInstaller implements Installer
     private string $moduleId;
     private CMain $application;
 
-    public function __construct(string $moduleId)
+    public function __construct(string $moduleId, CMain $application)
     {
         $this->moduleId = $moduleId;
-        global $APPLICATION;
-        $this->application = $APPLICATION;
+        $this->application = $application;
     }
 
     public function install(): void

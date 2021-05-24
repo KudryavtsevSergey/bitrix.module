@@ -8,14 +8,11 @@ class SuccessLogInstaller implements Installer
 {
     private string $moduleId;
     private CMain $application;
-    private string $documentRoot;
 
-    public function __construct(string $moduleId)
+    public function __construct(string $moduleId, CMain $application)
     {
         $this->moduleId = $moduleId;
-        global $APPLICATION, $DOCUMENT_ROOT;
-        $this->application = $APPLICATION;
-        $this->documentRoot = $DOCUMENT_ROOT;
+        $this->application = $application;
     }
 
     public function install(): void

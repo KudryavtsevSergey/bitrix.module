@@ -1,10 +1,10 @@
 <?php if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true) die();
 
 use Bitrix\Main\Localization\Loc;
+use Sun\BitrixModule\Enum\OptionTypeEnum;
 use Sun\BitrixModule\Installer\OptionsInstaller;
 use Sun\BitrixModule\Installer\SuccessRedirectInstaller;
 use Sun\BitrixModule\Option\OptionGroup;
-use Sun\BitrixModule\Option\OptionType;
 use Sun\BitrixModule\Option\OptionUtils;
 use Sun\BitrixModule\Option\OptionValue;
 use Sun\BitrixModule\Option\SelectOption;
@@ -18,7 +18,7 @@ Loc::loadMessages(__FILE__);
 
 if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstaller::SUCCESS) {
   unset($_SESSION[$moduleId]);
-  CAdminMessage::ShowNote('Успешно обновлено');
+  CAdminMessage::ShowNote(GetMessage('SUCCESS_MESSAGE'));
 }
 ?>
 
@@ -29,12 +29,11 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
 
   <div class="adm-detail-content-wrap">
     <div class="adm-detail-content">
-      <div class="adm-detail-title">Настройка параметров модуля <?= $moduleId; ?></div>
+      <div class="adm-detail-title"><?= GetMessage('MODULE_SETTINGS') ?> <?= $moduleId; ?></div>
       <div class="adm-detail-content-item-block">
         <table class="adm-detail-content-table edit-table">
           <tbody>
           <? foreach ($optionGroups as $optionGroup): ?>
-
             <tr class="heading">
               <td colspan="2"><b><?= $optionGroup->getName(); ?></b></td>
             </tr>
@@ -48,7 +47,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
                 </td>
                 <td class="adm-detail-content-cell-r">
                   <? switch ($option->getType()):
-                    case OptionType::TEXT: ?>
+                    case OptionTypeEnum::TEXT: ?>
                       <? /** @var TextOption $option */ ?>
                       <input
                         type="text"
@@ -59,7 +58,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
                         name="<?= $option->getName() ?>"
                       />
                       <? break;
-                    case OptionType::SELECT: ?>
+                    case OptionTypeEnum::SELECT: ?>
                       <? /** @var SelectOption $option */ ?>
                       <select
                         id="<?= $option->getName() ?>"
@@ -86,7 +85,12 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
 
     <div class="adm-detail-content-btns-wrap" id="tabControl_buttons_div" style="left: 0;">
       <div class="adm-detail-content-btns">
-        <input type="submit" value="Сохранить" title="Сохранить" class="adm-btn-save">
+        <input
+          type="submit"
+          value="<?= GetMessage('SAVE'); ?>"
+          title="<?= GetMessage('SAVE'); ?>"
+          class="adm-btn-save"
+        >
       </div>
     </div>
   </div>
