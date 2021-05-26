@@ -15,11 +15,6 @@ class BitrixPropertyUtils
         return sprintf('HLBLOCK_%s', $id);
     }
 
-    public static function getFieldName(string $fieldName): string
-    {
-        return sprintf('UF_%s', $fieldName);
-    }
-
     public static function getBooleanType(bool $value): string
     {
         return $value ? BooleanTypeEnum::YES : BooleanTypeEnum::NO;

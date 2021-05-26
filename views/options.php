@@ -67,7 +67,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
                       >
                         <? foreach ($option->getValues() as $optionValue): ?>
                           <option
-                            value="<?= $value ?>"
+                            value="<?= $optionValue->getValue(); ?>"
                             <? if ($optionValue->getValue() == $value): ?>selected<? endif; ?>
                           ><?= $optionValue->getName(); ?></option>
                         <? endforeach; ?>

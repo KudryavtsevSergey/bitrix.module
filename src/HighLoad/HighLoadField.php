@@ -3,11 +3,14 @@
 namespace Sun\BitrixModule\HighLoad;
 
 use Sun\BitrixModule\Enum\ShowFilterEnum;
+use Sun\BitrixModule\Exception\RuntimeModuleException;
 use Sun\BitrixModule\HighLoad\FieldSetting\AbstractFieldSettings;
 use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
 class HighLoadField implements BitrixProperties
 {
+    const USER_FIELD_PREFIX = 'UF_';
+
     private string $fieldName;
     private string $userType;
     private bool $mandatory;
@@ -61,6 +64,11 @@ class HighLoadField implements BitrixProperties
     public function __construct(string $fieldName, string $userType, bool $mandatory, AbstractFieldSettings $fieldSetting, bool $multiple = false, string $xmlId = '', int $sort = 500, string $showFilter = ShowFilterEnum::DO_NOT_SHOW, bool $showInList = true, bool $editInList = true, bool $isSearchable = true, array $editFormLabel = [], array $listColumnLabel = [], array $listFilterLabel = [], array $errorMessage = [], array $helpMessage = [])
     {
         ShowFilterEnum::checkAllowedValue($showFilter);
+        if (stripos($fieldName, self::USER_FIELD_PREFIX) !== 0) {
+            $message = sprintf('Field name %s must start with %s', $fieldName, self::USER_FIELD_PREFIX);
+            throw new RuntimeModuleException($message);
+        }
+
         $this->fieldName = $fieldName;
         $this->userType = $userType;
         $this->mandatory = $mandatory;
@@ -82,7 +90,7 @@ class HighLoadField implements BitrixProperties
     public function getProperties(): array
     {
         return [
-            'FIELD_NAME' => BitrixPropertyUtils::getFieldName($this->fieldName),
+            'FIELD_NAME' => $this->fieldName,
             'USER_TYPE_ID' => $this->userType,
             'XML_ID' => $this->xmlId,
             'SORT' => $this->sort,
