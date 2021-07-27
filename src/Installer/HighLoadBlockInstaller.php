@@ -7,6 +7,7 @@ use CUserTypeEntity;
 use Sun\BitrixModule\Exception\RuntimeModuleException;
 use Sun\BitrixModule\HighLoad\HighLoadTable;
 use Sun\BitrixModule\Option\OptionService;
+use Sun\BitrixModule\Utils\BitrixLoaderUtils;
 use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
 class HighLoadBlockInstaller extends AbstractInstallerDecorator
@@ -27,6 +28,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
     public function __construct(string $moduleId, array $blocks, OptionService $optionService, Installer $installer)
     {
         parent::__construct($installer);
+        BitrixLoaderUtils::loadModule('highloadblock');
         $this->moduleId = $moduleId;
         $this->blocks = $blocks;
         $this->optionService = $optionService;
@@ -48,8 +50,10 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
         foreach ($this->blocks as $block) {
             $name = $block->getName();
             $highLoadBlockId = $this->optionService->getOption($this->moduleId, $name);
-            $this->deleteHighLoadFields($highLoadBlockId);
-            $this->deleteHighLoadBlock($highLoadBlockId);
+            if ($highLoadBlockId) {
+                $this->deleteHighLoadFields($highLoadBlockId);
+                $this->deleteHighLoadBlock($highLoadBlockId);
+            }
             $this->optionService->unsetOption($this->moduleId, $name);
         }
         parent::uninstall();
