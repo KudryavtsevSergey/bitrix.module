@@ -2,9 +2,11 @@
 
 namespace Sun\BitrixModule\Installer;
 
-interface Installer
+interface InstallerInterface
 {
     public function install(): void;
+
+    public function getPostInstallCommands(): array;
 
     public function uninstall(): void;
 }

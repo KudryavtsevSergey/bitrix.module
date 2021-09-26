@@ -4,7 +4,7 @@ namespace Sun\BitrixModule\Installer;
 
 use Bitrix\Highloadblock\HighloadBlockTable;
 use CUserTypeEntity;
-use Sun\BitrixModule\Exception\RuntimeModuleException;
+use Sun\BitrixModule\Exception\InternalError;
 use Sun\BitrixModule\HighLoad\HighLoadTable;
 use Sun\BitrixModule\Option\OptionService;
 use Sun\BitrixModule\Utils\BitrixLoaderUtils;
@@ -23,10 +23,14 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
      * @param string $moduleId
      * @param HighLoadTable[] $blocks
      * @param OptionService $optionService
-     * @param Installer $installer
+     * @param InstallerInterface $installer
      */
-    public function __construct(string $moduleId, array $blocks, OptionService $optionService, Installer $installer)
-    {
+    public function __construct(
+        string $moduleId,
+        array $blocks,
+        OptionService $optionService,
+        InstallerInterface $installer
+    ) {
         parent::__construct($installer);
         BitrixLoaderUtils::loadModule('highloadblock');
         $this->moduleId = $moduleId;
@@ -78,7 +82,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
                 $highLoadBlockId,
                 $result->getErrorMessages()
             );
-            throw new RuntimeModuleException($message);
+            throw new InternalError($message);
         }
     }
 
@@ -94,7 +98,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
                 $highLoadBlockName,
                 $result->getErrorMessages()
             );
-            throw new RuntimeModuleException($message);
+            throw new InternalError($message);
         }
         return $result->getId();
     }
@@ -113,7 +117,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
                     $field['FIELD_NAME'],
                     $userType->LAST_ERROR
                 );
-                throw new RuntimeModuleException($message);
+                throw new InternalError($message);
             }
         }
     }

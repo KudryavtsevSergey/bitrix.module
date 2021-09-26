@@ -2,9 +2,9 @@
 
 namespace Sun\BitrixModule\HighLoad\FieldSetting;
 
-use Sun\BitrixModule\HighLoad\BitrixProperties;
+use Sun\BitrixModule\HighLoad\BitrixPropertiesInterface;
 
-abstract class AbstractFieldSettings implements BitrixProperties
+abstract class AbstractFieldSettings implements BitrixPropertiesInterface
 {
 
 }

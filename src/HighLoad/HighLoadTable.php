@@ -2,9 +2,9 @@
 
 namespace Sun\BitrixModule\HighLoad;
 
-use Sun\BitrixModule\Exception\RuntimeModuleException;
+use Sun\BitrixModule\Exception\InternalError;
 
-class HighLoadTable implements BitrixProperties
+class HighLoadTable implements BitrixPropertiesInterface
 {
     private string $name;
     /**
@@ -19,10 +19,10 @@ class HighLoadTable implements BitrixProperties
     public function __construct(string $name, array $fields)
     {
         if (!preg_match('~^\p{Lu}~u', $name)) {
-            throw new RuntimeModuleException(sprintf('The name %s of the highload block must start with a capital letter', $name));
+            throw new InternalError(sprintf('The name %s of the highload block must start with a capital letter', $name));
         }
         if (!preg_match('/[A-Za-z0-9]+/', $name)) {
-            throw new RuntimeModuleException(sprintf('The name %s of the highload block must consist only of latin letters and numbers', $name));
+            throw new InternalError(sprintf('The name %s of the highload block must consist only of latin letters and numbers', $name));
         }
         $this->name = $name;
         $this->fields = $fields;

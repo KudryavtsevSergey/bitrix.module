@@ -2,7 +2,7 @@
 
 namespace Sun\BitrixModule;
 
-use Sun\BitrixModule\Installer\Installer;
+use Sun\BitrixModule\Installer\InstallerInterface;
 
 interface Module
 {
@@ -18,5 +18,5 @@ interface Module
 
     public function getVersion(): Version;
 
-    public function getInstaller(): Installer;
+    public function getInstaller(): InstallerInterface;
 }

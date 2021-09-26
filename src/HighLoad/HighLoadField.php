@@ -3,11 +3,11 @@
 namespace Sun\BitrixModule\HighLoad;
 
 use Sun\BitrixModule\Enum\ShowFilterEnum;
-use Sun\BitrixModule\Exception\RuntimeModuleException;
+use Sun\BitrixModule\Exception\InternalError;
 use Sun\BitrixModule\HighLoad\FieldSetting\AbstractFieldSettings;
 use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
-class HighLoadField implements BitrixProperties
+class HighLoadField implements BitrixPropertiesInterface
 {
     const USER_FIELD_PREFIX = 'UF_';
 
@@ -61,12 +61,28 @@ class HighLoadField implements BitrixProperties
      * @param LanguageValue[] $errorMessage
      * @param LanguageValue[] $helpMessage
      */
-    public function __construct(string $fieldName, string $userType, bool $mandatory, AbstractFieldSettings $fieldSetting, bool $multiple = false, string $xmlId = '', int $sort = 500, string $showFilter = ShowFilterEnum::DO_NOT_SHOW, bool $showInList = true, bool $editInList = true, bool $isSearchable = true, array $editFormLabel = [], array $listColumnLabel = [], array $listFilterLabel = [], array $errorMessage = [], array $helpMessage = [])
-    {
+    public function __construct(
+        string $fieldName,
+        string $userType,
+        bool $mandatory,
+        AbstractFieldSettings $fieldSetting,
+        bool $multiple = false,
+        string $xmlId = '',
+        int $sort = 500,
+        string $showFilter = ShowFilterEnum::DO_NOT_SHOW,
+        bool $showInList = true,
+        bool $editInList = true,
+        bool $isSearchable = true,
+        array $editFormLabel = [],
+        array $listColumnLabel = [],
+        array $listFilterLabel = [],
+        array $errorMessage = [],
+        array $helpMessage = []
+    ) {
         ShowFilterEnum::checkAllowedValue($showFilter);
         if (stripos($fieldName, self::USER_FIELD_PREFIX) !== 0) {
             $message = sprintf('Field name %s must start with %s', $fieldName, self::USER_FIELD_PREFIX);
-            throw new RuntimeModuleException($message);
+            throw new InternalError($message);
         }
 
         $this->fieldName = $fieldName;

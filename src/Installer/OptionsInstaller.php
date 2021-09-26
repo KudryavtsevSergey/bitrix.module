@@ -27,10 +27,15 @@ class OptionsInstaller extends AbstractInstallerDecorator
      * @param OptionGroup[] $optionGroups
      * @param OptionService $optionService
      * @param CMain $application
-     * @param Installer $installer
+     * @param InstallerInterface $installer
      */
-    public function __construct(string $moduleId, array $optionGroups, OptionService $optionService, CMain $application, Installer $installer)
-    {
+    public function __construct(
+        string $moduleId,
+        array $optionGroups,
+        OptionService $optionService,
+        CMain $application,
+        InstallerInterface $installer
+    ) {
         parent::__construct($installer);
         $this->moduleId = $moduleId;
         $this->optionGroups = $optionGroups;

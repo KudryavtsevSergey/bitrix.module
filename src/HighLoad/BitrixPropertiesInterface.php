@@ -2,7 +2,7 @@
 
 namespace Sun\BitrixModule\HighLoad;
 
-interface BitrixProperties
+interface BitrixPropertiesInterface
 {
     public function getProperties(): array;
 }

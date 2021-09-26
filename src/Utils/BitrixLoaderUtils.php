@@ -6,7 +6,7 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\LoaderException;
 use Bitrix\Main\UI\Extension;
 use Sun\BitrixModule\Exception\ModuleNotFoundException;
-use Sun\BitrixModule\Exception\RuntimeModuleException;
+use Sun\BitrixModule\Exception\InternalError;
 
 class BitrixLoaderUtils
 {
@@ -22,7 +22,7 @@ class BitrixLoaderUtils
             }
         } catch (LoaderException $e) {
             $message = sprintf('Loader error when loading module %s', $moduleId);
-            throw new RuntimeModuleException($message, $e);
+            throw new InternalError($message, $e);
         }
     }
 
@@ -32,7 +32,7 @@ class BitrixLoaderUtils
             Extension::load($extensionId);
         } catch (LoaderException $e) {
             $message = sprintf('Loader error when loading extension %s', $extensionId);
-            throw new RuntimeModuleException($message, $e);
+            throw new InternalError($message, $e);
         }
     }
 }

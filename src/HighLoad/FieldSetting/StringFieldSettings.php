@@ -22,8 +22,14 @@ class StringFieldSettings extends AbstractFieldSettings
      * @param int $maxLength
      * @param string|null $regexp
      */
-    public function __construct($default = null, int $size = 20, int $rows = 1, int $minLength = 0, int $maxLength = 0, ?string $regexp = null)
-    {
+    public function __construct(
+        $default = null,
+        int $size = 20,
+        int $rows = 1,
+        int $minLength = 0,
+        int $maxLength = 0,
+        ?string $regexp = null
+    ) {
         $this->default = $default;
         $this->size = $size;
         $this->rows = $rows;

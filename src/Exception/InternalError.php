@@ -4,7 +4,7 @@ namespace Sun\BitrixModule\Exception;
 
 use Throwable;
 
-class RuntimeModuleException extends AbstractInternalException
+class InternalError extends AbstractInternalException
 {
     public function __construct(string $message, ?Throwable $previous = null)
     {

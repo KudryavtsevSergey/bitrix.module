@@ -4,7 +4,7 @@ namespace Sun\BitrixModule\Installer;
 
 use CMain;
 
-class SuccessLogInstaller implements Installer
+class SuccessLogInstaller implements InstallerInterface
 {
     private string $moduleId;
     private CMain $application;
@@ -27,5 +27,10 @@ class SuccessLogInstaller implements Installer
         $title = sprintf('Uninstalling the module %s', $this->moduleId);
         $filePath = sprintf('%s/../../views/uninstall.php', __DIR__);
         $this->application->IncludeAdminFile($title, $filePath);
+    }
+
+    public function getPostInstallCommands(): array
+    {
+        return [];
     }
 }

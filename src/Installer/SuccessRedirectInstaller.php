@@ -4,9 +4,9 @@ namespace Sun\BitrixModule\Installer;
 
 use CMain;
 
-class SuccessRedirectInstaller implements Installer
+class SuccessRedirectInstaller implements InstallerInterface
 {
-    const SUCCESS = 'Y';
+    public const SUCCESS = 'Y';
 
     private string $moduleId;
     private CMain $application;
@@ -20,11 +20,21 @@ class SuccessRedirectInstaller implements Installer
     public function install(): void
     {
         $_SESSION[$this->moduleId] = self::SUCCESS;
-        $url = sprintf('%s?mid=%s&lang=%s', $this->application->GetCurPage(), urlencode($this->moduleId), urlencode(LANGUAGE_ID));
+        $url = sprintf(
+            '%s?mid=%s&lang=%s',
+            $this->application->GetCurPage(),
+            urlencode($this->moduleId),
+            urlencode(LANGUAGE_ID)
+        );
         LocalRedirect($url);
     }
 
     public function uninstall(): void
     {
+    }
+
+    public function getPostInstallCommands(): array
+    {
+        return [];
     }
 }
