@@ -37,8 +37,25 @@ class DirUtils
                 throw new InternalError(sprintf('File %s already exist', $directory));
             }
         } elseif (!mkdir($directory, self::DIRECTORY_PERMISSIONS, true)) {
-            throw new InternalError(sprintf('Error creating %s', $directory));
+            $error = self::getLastErrorAsString();
+            throw new InternalError(sprintf('Error creating %s with error: %s', $directory, $error));
         }
+    }
+
+    private static function getLastErrorAsString(): ?string
+    {
+        $error = error_get_last();
+        $type = $error['type'] ?? null;
+        $message = $error['message'] ?? null;
+        $file = $error['file'] ?? null;
+        $line = $error['line'] ?? null;
+        return $message === null ? null : sprintf(
+            'type: %s, message: %s, file: %s, line: %s',
+            $type,
+            $message,
+            $file,
+            $line
+        );
     }
 
     public static function reCreateDirectory(string $target): void

@@ -96,7 +96,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
             $message = sprintf(
                 'Error creating highload %s with errors %s',
                 $highLoadBlockName,
-                $result->getErrorMessages()
+                implode(', ', $result->getErrorMessages())
             );
             throw new InternalError($message);
         }

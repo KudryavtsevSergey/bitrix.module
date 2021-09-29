@@ -2,9 +2,9 @@
 
 namespace Sun\BitrixModule;
 
-use Sun\BitrixModule\Installer\OptionsInstaller;
+use Sun\BitrixModule\Installer\InstallerInterface;
 
 interface OptionsModule
 {
-    public function getOptionsInstaller(): OptionsInstaller;
+    public function getOptionsInstaller(): InstallerInterface;
 }

@@ -90,7 +90,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
           value="<?= GetMessage('SAVE'); ?>"
           title="<?= GetMessage('SAVE'); ?>"
           class="adm-btn-save"
-        >
+        />
       </div>
     </div>
   </div>
