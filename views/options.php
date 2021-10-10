@@ -18,7 +18,7 @@ Loc::loadMessages(__FILE__);
 
 if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstaller::SUCCESS) {
   unset($_SESSION[$moduleId]);
-  CAdminMessage::ShowNote(GetMessage('SUCCESS_MESSAGE'));
+  CAdminMessage::ShowNote(Loc::getMessage('SUCCESS_MESSAGE'));
 }
 ?>
 
@@ -29,7 +29,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
 
   <div class="adm-detail-content-wrap">
     <div class="adm-detail-content">
-      <div class="adm-detail-title"><?= GetMessage('MODULE_SETTINGS') ?> <?= $moduleId; ?></div>
+      <div class="adm-detail-title"><?= Loc::getMessage('MODULE_SETTINGS') ?> <?= $moduleId; ?></div>
       <div class="adm-detail-content-item-block">
         <table class="adm-detail-content-table edit-table">
           <tbody>
@@ -87,8 +87,8 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
       <div class="adm-detail-content-btns">
         <input
           type="submit"
-          value="<?= GetMessage('SAVE'); ?>"
-          title="<?= GetMessage('SAVE'); ?>"
+          value="<?= Loc::getMessage('SAVE'); ?>"
+          title="<?= Loc::getMessage('SAVE'); ?>"
           class="adm-btn-save"
         />
       </div>
