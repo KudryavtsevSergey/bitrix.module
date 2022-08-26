@@ -16,7 +16,7 @@ use Sun\BitrixModule\Option\TextOption;
 
 Loc::loadMessages(__FILE__);
 
-if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstaller::SUCCESS) {
+if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInstaller::SUCCESS) {
   unset($_SESSION[$moduleId]);
   CAdminMessage::ShowNote(Loc::getMessage('SUCCESS_MESSAGE'));
 }
@@ -38,6 +38,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
               <td colspan="2"><b><?= $optionGroup->getName(); ?></b></td>
             </tr>
             <? foreach ($optionGroup->getOptions() as $option): ?>
+              <? if ($option->getType() === OptionTypeEnum::HIDDEN): continue; endif; ?>
               <? $value = OptionUtils::getOptionValue($optionValues, $option); ?>
               <tr>
                 <td class="adm-detail-content-cell-l">
@@ -55,21 +56,29 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] == SuccessRedirectInstal
                         maxlength="255"
                         id="<?= $option->getName() ?>"
                         value="<?= $value ?>"
-                        name="<?= $option->getName() ?>"
+                        name="<?= $option->getInputName() ?>"
                       />
                       <? break;
                     case OptionTypeEnum::SELECT: ?>
                       <? /** @var SelectOption $option */ ?>
                       <select
                         id="<?= $option->getName() ?>"
-                        name="<?= $option->getName() ?>"
+                        name="<?= $option->getInputName() ?>"
                         class="typeselect"
+                        <? if ($option->isMultiple()): ?>multiple<? endif; ?>
                       >
                         <? foreach ($option->getValues() as $optionValue): ?>
-                          <option
-                            value="<?= $optionValue->getValue(); ?>"
-                            <? if ($optionValue->getValue() == $value): ?>selected<? endif; ?>
-                          ><?= $optionValue->getName(); ?></option>
+                          <? if ($option->isMultiple()): ?>
+                            <option
+                              value="<?= $optionValue->getValue(); ?>"
+                              <? if (in_array($optionValue->getValue(), $value ?? [])): ?>selected<? endif; ?>
+                            ><?= $optionValue->getName(); ?></option>
+                          <? else: ?>
+                            <option
+                              value="<?= $optionValue->getValue(); ?>"
+                              <? if ($optionValue->getValue() == $value): ?>selected<? endif; ?>
+                            ><?= $optionValue->getName(); ?></option>
+                          <? endif; ?>
                         <? endforeach; ?>
                       </select>
                       <? break;

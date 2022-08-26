@@ -73,7 +73,7 @@ class DirUtils
         }
 
         while (($entry = readdir($sourceDirectoryHandle)) !== false) {
-            if ($entry == DirUtils::CURRENT_DIRECTORY || $entry == DirUtils::PARENT_DIRECTORY) {
+            if ($entry === DirUtils::CURRENT_DIRECTORY || $entry === DirUtils::PARENT_DIRECTORY) {
                 continue;
             }
 

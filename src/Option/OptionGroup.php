@@ -11,7 +11,6 @@ class OptionGroup
     private array $options;
 
     /**
-     * Group constructor.
      * @param string $name
      * @param AbstractOption[] $options
      */

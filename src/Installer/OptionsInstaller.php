@@ -46,7 +46,7 @@ class OptionsInstaller extends AbstractInstallerDecorator
     public function install(): void
     {
         $request = Application::getInstance()->getContext()->getRequest();
-        if (check_bitrix_sessid() && $request->isPost() && $request->get(self::STEP_FIELD) == self::STEP_VALUE) {
+        if (check_bitrix_sessid() && $request->isPost() && $request->get(self::STEP_FIELD) === self::STEP_VALUE) {
             $this->setOptions($request);
             parent::install();
         } else {
@@ -77,8 +77,9 @@ class OptionsInstaller extends AbstractInstallerDecorator
         foreach ($this->optionGroups as $optionGroup) {
             foreach ($optionGroup->getOptions() as $option) {
                 $optionName = $option->getName();
-                $optionValue = $options[$optionName] ?? $option->getDefault();
-                $result[] = new OptionValue($optionName, $optionValue);
+                $value = $options[$optionName] ?? null;
+                $formattedValue = !empty($value) && $option->isMultiple() ? json_decode($value, true) : $value;
+                $result[] = new OptionValue($optionName, $formattedValue);
             }
         }
         return $result;
@@ -86,10 +87,16 @@ class OptionsInstaller extends AbstractInstallerDecorator
 
     private function setOptions(HttpRequest $request): void
     {
-        foreach ($this->getOptionValues() as $optionValue) {
-            $optionName = $optionValue->getName();
-            $value = $request->get($optionName) ?? $optionValue->getValue();
-            $this->optionService->setOption($this->moduleId, $optionName, $value);
+        foreach ($this->optionGroups as $optionGroup) {
+            foreach ($optionGroup->getOptions() as $option) {
+                $optionName = $option->getName();
+                if ($value = $request->get($optionName) ?? $option->getDefault()) {
+                    $value = $option->isMultiple() ? json_encode($value) : $value;
+                    $this->optionService->setOption($this->moduleId, $optionName, $value);
+                } else {
+                    $this->optionService->unsetOption($this->moduleId, $optionName);
+                }
+            }
         }
     }
 

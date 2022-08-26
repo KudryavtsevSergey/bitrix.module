@@ -35,6 +35,8 @@ class HighLoadTable implements BitrixPropertiesInterface
 
     public function getProperties(): array
     {
-        return array_map(fn(HighLoadField $highLoadField): array => $highLoadField->getProperties(), $this->fields);
+        return array_map(static fn(
+            HighLoadField $highLoadField
+        ): array => $highLoadField->getProperties(), $this->fields);
     }
 }

@@ -53,15 +53,18 @@ abstract class BitrixModule extends CModule implements Module
         if (empty($commands)) {
             return null;
         }
-        $commands = array_map(function (array $installerCommands): string {
-            $installerCommands = array_map(function (array $commands): string {
-                $commands = array_map(function (CommandInterface $command): string {
-                    return $command->getCommand();
-                }, $commands);
+        $commands = array_map(static function (array $installerCommands): string {
+            $installerCommands = array_map(static function (array $commands): string {
+                $commands = array_map(static fn(
+                    CommandInterface $command
+                ): string => $command->getCommand(), $commands);
+
                 return implode(" \\\n&& ", $commands);
             }, $installerCommands);
+
             return implode(" \\\n\\\n&& ", $installerCommands);
         }, $commands);
+
         return implode(" \\\n\\\n\\\n&& ", $commands);
     }
 }

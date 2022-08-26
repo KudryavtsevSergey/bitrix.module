@@ -15,10 +15,15 @@ class SelectOption extends AbstractOption
      * @param string $name
      * @param SelectOptionItem[] $values
      * @param string|null $default
+     * @param bool $isMultiple
      */
-    public function __construct(string $name, array $values, ?string $default = null)
-    {
-        parent::__construct($name, $default);
+    public function __construct(
+        string $name,
+        array $values,
+        ?string $default = null,
+        bool $isMultiple = false
+    ) {
+        parent::__construct($name, $default, $isMultiple);
         $this->values = $values;
     }
 
