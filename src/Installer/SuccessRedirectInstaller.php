@@ -8,13 +8,10 @@ class SuccessRedirectInstaller implements InstallerInterface
 {
     public const SUCCESS = 'Y';
 
-    private string $moduleId;
-    private CMain $application;
-
-    public function __construct(string $moduleId, CMain $application)
-    {
-        $this->moduleId = $moduleId;
-        $this->application = $application;
+    public function __construct(
+        private string $moduleId,
+        private CMain $application,
+    ) {
     }
 
     public function install(): void

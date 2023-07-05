@@ -7,5 +7,5 @@ use Bitrix\Main\Localization\Loc;
 CAdminMessage::ShowNote(Loc::getMessage('SUCCESS_MESSAGE'));
 
 if (!empty($postInstallCommand)) {
-    echo sprintf('<pre>%s</pre>', print_r($postInstallCommand, 1));
+    echo sprintf('<pre>%s</pre>', print_r($postInstallCommand, true));
 }

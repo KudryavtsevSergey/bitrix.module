@@ -1,0 +1,7 @@
+parameters:
+    scanDirectories:
+        - ../../../bitrix/modules
+    level: 6
+    checkMissingIterableValueType: false
+    paths:
+        - src

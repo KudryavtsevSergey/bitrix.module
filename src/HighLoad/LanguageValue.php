@@ -6,14 +6,11 @@ use Sun\BitrixModule\Enum\LanguageEnum;
 
 class LanguageValue
 {
-    private string $language;
-    private string $value;
-
-    public function __construct(string $language, string $value)
-    {
+    public function __construct(
+        private string $language,
+        private string $value
+    ) {
         LanguageEnum::checkAllowedValue($language);
-        $this->language = $language;
-        $this->value = $value;
     }
 
     public function getLanguage(): string

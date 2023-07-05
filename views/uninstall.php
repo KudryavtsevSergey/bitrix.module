@@ -2,10 +2,10 @@
 
 use Bitrix\Main\Localization\Loc;
 
-/** @var ?Throwable $moduleException */
+/** @var Throwable|null $moduleException */
 
 CAdminMessage::ShowNote(Loc::getMessage('SUCCESS_MESSAGE'));
 
 if (isset($moduleException)) {
-    echo sprintf('<pre>%s</pre>', print_r($moduleException, 1));
+    echo sprintf('<pre>%s</pre>', print_r($moduleException, true));
 }

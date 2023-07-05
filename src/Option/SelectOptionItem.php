@@ -4,21 +4,10 @@ namespace Sun\BitrixModule\Option;
 
 class SelectOptionItem
 {
-    private string $name;
-
-    /**
-     * @var mixed
-     */
-    private $value;
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function __construct(string $name, $value)
-    {
-        $this->name = $name;
-        $this->value = $value;
+    public function __construct(
+        private string $name,
+        private int|string $value,
+    ) {
     }
 
     public function getName(): string
@@ -26,10 +15,7 @@ class SelectOptionItem
         return $this->name;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getValue()
+    public function getValue(): int|string
     {
         return $this->value;
     }

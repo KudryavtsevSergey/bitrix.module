@@ -64,7 +64,7 @@ class DirUtils
         self::createDirectory($target);
     }
 
-    public static function copyDirectory(string $pathFrom, string $pathTo)
+    public static function copyDirectory(string $pathFrom, string $pathTo): void
     {
         self::reCreateDirectory($pathTo);
 

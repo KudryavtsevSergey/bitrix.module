@@ -11,16 +11,8 @@ use Sun\BitrixModule\Option\OptionValue;
 
 class OptionsInstaller extends AbstractInstallerDecorator
 {
-    const STEP_FIELD = 'step';
-    const STEP_VALUE = 'options';
-
-    private string $moduleId;
-    /**
-     * @var OptionGroup[]
-     */
-    private array $optionGroups;
-    private OptionService $optionService;
-    private CMain $application;
+    public const STEP_FIELD = 'step';
+    public const STEP_VALUE = 'options';
 
     /**
      * @param string $moduleId
@@ -30,17 +22,13 @@ class OptionsInstaller extends AbstractInstallerDecorator
      * @param InstallerInterface $installer
      */
     public function __construct(
-        string $moduleId,
-        array $optionGroups,
-        OptionService $optionService,
-        CMain $application,
+        private string $moduleId,
+        private array $optionGroups,
+        private OptionService $optionService,
+        private CMain $application,
         InstallerInterface $installer
     ) {
         parent::__construct($installer);
-        $this->moduleId = $moduleId;
-        $this->optionGroups = $optionGroups;
-        $this->optionService = $optionService;
-        $this->application = $application;
     }
 
     public function install(): void
@@ -78,7 +66,8 @@ class OptionsInstaller extends AbstractInstallerDecorator
             foreach ($optionGroup->getOptions() as $option) {
                 $optionName = $option->getName();
                 $value = $options[$optionName] ?? null;
-                $formattedValue = !empty($value) && $option->isMultiple() ? json_decode($value, true) : $value;
+                $formattedValue = !empty($value) && $option->isMultiple() ?
+                    json_decode($value, true, flags: JSON_THROW_ON_ERROR) : $value;
                 $result[] = new OptionValue($optionName, $formattedValue);
             }
         }
@@ -91,7 +80,7 @@ class OptionsInstaller extends AbstractInstallerDecorator
             foreach ($optionGroup->getOptions() as $option) {
                 $optionName = $option->getName();
                 if ($value = $request->get($optionName) ?? $option->getDefault()) {
-                    $value = $option->isMultiple() ? json_encode($value) : $value;
+                    $value = $option->isMultiple() ? json_encode($value, JSON_THROW_ON_ERROR) : $value;
                     $this->optionService->setOption($this->moduleId, $optionName, $value);
                 } else {
                     $this->optionService->unsetOption($this->moduleId, $optionName);

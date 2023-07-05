@@ -9,18 +9,14 @@ use Sun\BitrixModule\Utils\DirUtils;
 abstract class FilesCopyInstaller extends AbstractInstallerDecorator
 {
     /**
-     * @var FilePathInterface[]
-     */
-    private array $items;
-
-    /**
      * @param FilePathInterface[] $items
      * @param InstallerInterface $installer
      */
-    public function __construct(array $items, InstallerInterface $installer)
-    {
+    public function __construct(
+        private array $items,
+        InstallerInterface $installer,
+    ) {
         parent::__construct($installer);
-        $this->items = $items;
     }
 
     public function install(): void

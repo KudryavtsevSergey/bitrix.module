@@ -6,10 +6,6 @@ use Sun\BitrixModule\Enum\BooleanTypeEnum;
 
 class BitrixPropertyUtils
 {
-    private function __construct()
-    {
-    }
-
     public static function getHighLoadBlockId(int $id): string
     {
         return sprintf('HLBLOCK_%s', $id);

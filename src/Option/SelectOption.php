@@ -7,24 +7,18 @@ use Sun\BitrixModule\Enum\OptionTypeEnum;
 class SelectOption extends AbstractOption
 {
     /**
-     * @var SelectOptionItem[]
-     */
-    private array $values;
-
-    /**
      * @param string $name
      * @param SelectOptionItem[] $values
-     * @param string|null $default
+     * @param array|string|null $default
      * @param bool $isMultiple
      */
     public function __construct(
         string $name,
-        array $values,
-        ?string $default = null,
+        private array $values,
+        array|string|null $default = null,
         bool $isMultiple = false
     ) {
         parent::__construct($name, $default, $isMultiple);
-        $this->values = $values;
     }
 
     /**

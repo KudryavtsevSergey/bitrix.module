@@ -4,16 +4,12 @@ namespace Sun\BitrixModule\Option;
 
 class OptionUtils
 {
-    private function __construct()
-    {
-    }
-
     /**
      * @param OptionValue[] $optionValues
      * @param AbstractOption $option
-     * @return mixed|null
+     * @return array|string|null
      */
-    public static function getOptionValue(array $optionValues, AbstractOption $option)
+    public static function getOptionValue(array $optionValues, AbstractOption $option): array|string|null
     {
         /** @var OptionValue|null $optionValue */
         $optionValue = current(array_filter($optionValues, static fn(

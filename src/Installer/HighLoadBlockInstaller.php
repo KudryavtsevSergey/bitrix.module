@@ -3,22 +3,15 @@
 namespace Sun\BitrixModule\Installer;
 
 use Bitrix\Highloadblock\HighloadBlockTable;
+use Bitrix\Main\Loader;
 use CUserTypeEntity;
 use Sun\BitrixModule\Exception\InternalError;
 use Sun\BitrixModule\HighLoad\HighLoadTable;
 use Sun\BitrixModule\Option\OptionService;
-use Sun\BitrixModule\Utils\BitrixLoaderUtils;
 use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
 class HighLoadBlockInstaller extends AbstractInstallerDecorator
 {
-    private string $moduleId;
-    /**
-     * @var HighLoadTable[]
-     */
-    private array $blocks;
-    private OptionService $optionService;
-
     /**
      * @param string $moduleId
      * @param HighLoadTable[] $blocks
@@ -26,16 +19,13 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
      * @param InstallerInterface $installer
      */
     public function __construct(
-        string $moduleId,
-        array $blocks,
-        OptionService $optionService,
+        private string $moduleId,
+        private array $blocks,
+        private OptionService $optionService,
         InstallerInterface $installer
     ) {
         parent::__construct($installer);
-        BitrixLoaderUtils::loadModule('highloadblock');
-        $this->moduleId = $moduleId;
-        $this->blocks = $blocks;
-        $this->optionService = $optionService;
+        Loader::includeModule('highloadblock');
     }
 
     public function install(): void
@@ -43,7 +33,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
         foreach ($this->blocks as $block) {
             $name = $block->getName();
             $highLoadBlockId = $this->createHighLoadBlock($name);
-            $this->optionService->setOption($this->moduleId, $name, $highLoadBlockId);
+            $this->optionService->setOption($this->moduleId, $name, (string)$highLoadBlockId);
             $this->createHighLoadFields($highLoadBlockId, $block->getProperties());
         }
         parent::install();
@@ -55,8 +45,8 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
             $name = $block->getName();
             $highLoadBlockId = $this->optionService->getOption($this->moduleId, $name);
             if ($highLoadBlockId) {
-                $this->deleteHighLoadFields($highLoadBlockId);
-                $this->deleteHighLoadBlock($highLoadBlockId);
+                $this->deleteHighLoadFields((int)$highLoadBlockId);
+                $this->deleteHighLoadBlock((int)$highLoadBlockId);
             }
             $this->optionService->unsetOption($this->moduleId, $name);
         }
@@ -103,7 +93,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
         return $result->getId();
     }
 
-    public function createHighLoadFields(string $id, array $highLoadFields): void
+    public function createHighLoadFields(int $id, array $highLoadFields): void
     {
         $userType = $this->createUserType();
         foreach ($highLoadFields as $highLoadField) {

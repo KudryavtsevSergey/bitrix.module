@@ -4,10 +4,10 @@ namespace Sun\BitrixModule\Enum;
 
 class ShowFilterEnum extends AbstractEnum
 {
-    const DO_NOT_SHOW = 'N';
-    const EXACT_MATCH = 'I';
-    const SEARCH_BY_MASK = 'E';
-    const SEARCH_BY_SUBSTRING = 'S';
+    public const DO_NOT_SHOW = 'N';
+    public const EXACT_MATCH = 'I';
+    public const SEARCH_BY_MASK = 'E';
+    public const SEARCH_BY_SUBSTRING = 'S';
 
     public static function getValues(): array
     {

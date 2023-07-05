@@ -6,10 +6,6 @@ use Sun\BitrixModule\FilePath\ExtensionPath;
 
 class ExtensionsInstaller extends FilesCopyInstaller
 {
-    private string $documentRoot;
-    private string $moduleId;
-    private string $namespace;
-
     /**
      * @param string $documentRoot
      * @param string $moduleId
@@ -18,16 +14,13 @@ class ExtensionsInstaller extends FilesCopyInstaller
      * @param InstallerInterface $installer
      */
     public function __construct(
-        string $documentRoot,
-        string $moduleId,
-        string $namespace,
+        private string $documentRoot,
+        private string $moduleId,
+        private string $namespace,
         array $extensions,
-        InstallerInterface $installer
+        InstallerInterface $installer,
     ) {
         parent::__construct($extensions, $installer);
-        $this->documentRoot = $documentRoot;
-        $this->moduleId = $moduleId;
-        $this->namespace = $namespace;
     }
 
     protected function getPathFrom(string $name): string

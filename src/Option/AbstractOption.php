@@ -4,23 +4,11 @@ namespace Sun\BitrixModule\Option;
 
 abstract class AbstractOption
 {
-    private string $name;
-    /**
-     * @var mixed|null
-     */
-    private $default;
-    private bool $isMultiple;
-
-    /**
-     * @param string $name
-     * @param mixed|null $default
-     * @param bool $isMultiple
-     */
-    public function __construct(string $name, $default = null, bool $isMultiple = false)
-    {
-        $this->name = $name;
-        $this->default = $default;
-        $this->isMultiple = $isMultiple;
+    public function __construct(
+        private string $name,
+        private array|string|null $default = null,
+        private bool $isMultiple = false
+    ) {
     }
 
     public function getName(): string
@@ -33,10 +21,7 @@ abstract class AbstractOption
         return $this->isMultiple ? sprintf('%s[]', $this->name) : $this->name;
     }
 
-    /**
-     * @return mixed|null
-     */
-    public function getDefault()
+    public function getDefault(): array|string|null
     {
         return $this->default;
     }

@@ -2,9 +2,9 @@
 
 namespace Sun\BitrixModule\Command;
 
-class BitrixBuildCommand implements CommandInterface
+class NpmBuildCommand implements CommandInterface
 {
-    private const COMMAND = 'bitrix build';
+    private const COMMAND = 'npm run build';
 
     public function getCommand(): string
     {

@@ -4,19 +4,19 @@ namespace Sun\BitrixModule\Enum;
 
 class UserTypeEnum extends AbstractEnum
 {
-    const ENUMERATION = 'enumeration';
-    const DOUBLE = 'double';
-    const INTEGER = 'integer';
-    const BOOLEAN = 'boolean';
-    const STRING = 'string';
-    const FILE = 'file';
-    const VIDEO = 'video';
-    const DATETIME = 'datetime';
-    const IBLOCK_SECTION = 'iblock_section';
-    const IBLOCK_ELEMENT = 'iblock_element';
-    const STRING_FORMATTED = 'string_formatted';
-    const CRM = 'crm';
-    const CRM_STATUS = 'crm_status';
+    public const ENUMERATION = 'enumeration';
+    public const DOUBLE = 'double';
+    public const INTEGER = 'integer';
+    public const BOOLEAN = 'boolean';
+    public const STRING = 'string';
+    public const FILE = 'file';
+    public const VIDEO = 'video';
+    public const DATETIME = 'datetime';
+    public const IBLOCK_SECTION = 'iblock_section';
+    public const IBLOCK_ELEMENT = 'iblock_element';
+    public const STRING_FORMATTED = 'string_formatted';
+    public const CRM = 'crm';
+    public const CRM_STATUS = 'crm_status';
 
     public static function getValues(): array
     {

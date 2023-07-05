@@ -4,8 +4,8 @@ namespace Sun\BitrixModule\Enum;
 
 class LanguageEnum extends AbstractEnum
 {
-    const RUSSIAN = 'ru';
-    const ENGLISH = 'en';
+    public const RUSSIAN = 'ru';
+    public const ENGLISH = 'en';
 
     public static function getValues(): array
     {

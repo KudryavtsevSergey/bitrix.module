@@ -9,39 +9,7 @@ use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
 class HighLoadField implements BitrixPropertiesInterface
 {
-    const USER_FIELD_PREFIX = 'UF_';
-
-    private string $fieldName;
-    private string $userType;
-    private bool $mandatory;
-    private AbstractFieldSettings $fieldSetting;
-    private bool $multiple;
-    private string $xmlId;
-    private int $sort;
-    private string $showFilter;
-    private bool $showInList;
-    private bool $editInList;
-    private bool $isSearchable;
-    /**
-     * @var LanguageValue[]
-     */
-    private array $editFormLabel;
-    /**
-     * @var LanguageValue[]
-     */
-    private array $listColumnLabel;
-    /**
-     * @var LanguageValue[]
-     */
-    private array $listFilterLabel;
-    /**
-     * @var LanguageValue[]
-     */
-    private array $errorMessage;
-    /**
-     * @var LanguageValue[]
-     */
-    private array $helpMessage;
+    private const USER_FIELD_PREFIX = 'UF_';
 
     /**
      * @param string $fieldName
@@ -62,45 +30,28 @@ class HighLoadField implements BitrixPropertiesInterface
      * @param LanguageValue[] $helpMessage
      */
     public function __construct(
-        string $fieldName,
-        string $userType,
-        bool $mandatory,
-        AbstractFieldSettings $fieldSetting,
-        bool $multiple = false,
-        string $xmlId = '',
-        int $sort = 500,
-        string $showFilter = ShowFilterEnum::DO_NOT_SHOW,
-        bool $showInList = true,
-        bool $editInList = true,
-        bool $isSearchable = true,
-        array $editFormLabel = [],
-        array $listColumnLabel = [],
-        array $listFilterLabel = [],
-        array $errorMessage = [],
-        array $helpMessage = []
+        private string $fieldName,
+        private string $userType,
+        private bool $mandatory,
+        private AbstractFieldSettings $fieldSetting,
+        private bool $multiple = false,
+        private string $xmlId = '',
+        private int $sort = 500,
+        private string $showFilter = ShowFilterEnum::DO_NOT_SHOW,
+        private bool $showInList = true,
+        private bool $editInList = true,
+        private bool $isSearchable = true,
+        private array $editFormLabel = [],
+        private array $listColumnLabel = [],
+        private array $listFilterLabel = [],
+        private array $errorMessage = [],
+        private array $helpMessage = []
     ) {
         ShowFilterEnum::checkAllowedValue($showFilter);
         if (stripos($fieldName, self::USER_FIELD_PREFIX) !== 0) {
             $message = sprintf('Field name %s must start with %s', $fieldName, self::USER_FIELD_PREFIX);
             throw new InternalError($message);
         }
-
-        $this->fieldName = $fieldName;
-        $this->userType = $userType;
-        $this->mandatory = $mandatory;
-        $this->fieldSetting = $fieldSetting;
-        $this->multiple = $multiple;
-        $this->xmlId = $xmlId;
-        $this->sort = $sort;
-        $this->showFilter = $showFilter;
-        $this->showInList = $showInList;
-        $this->editInList = $editInList;
-        $this->isSearchable = $isSearchable;
-        $this->editFormLabel = $editFormLabel;
-        $this->listColumnLabel = $listColumnLabel;
-        $this->listFilterLabel = $listFilterLabel;
-        $this->errorMessage = $errorMessage;
-        $this->helpMessage = $helpMessage;
     }
 
     public function getProperties(): array

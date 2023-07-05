@@ -4,9 +4,9 @@ namespace Sun\BitrixModule\Enum;
 
 class OptionTypeEnum extends AbstractEnum
 {
-    const TEXT = 'TEXT';
-    const SELECT = 'SELECT';
-    const HIDDEN = 'HIDDEN';
+    public const TEXT = 'TEXT';
+    public const SELECT = 'SELECT';
+    public const HIDDEN = 'HIDDEN';
 
     public static function getValues(): array
     {
