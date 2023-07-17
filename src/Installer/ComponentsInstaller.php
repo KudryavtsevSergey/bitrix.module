@@ -4,7 +4,7 @@ namespace Sun\BitrixModule\Installer;
 
 use Sun\BitrixModule\FilePath\ComponentPath;
 
-class ComponentsInstaller extends FilesCopyInstaller
+class ComponentsInstaller extends AbstractFilesCopyInstaller
 {
     /**
      * @param string $documentRoot

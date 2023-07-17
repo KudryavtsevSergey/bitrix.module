@@ -6,7 +6,7 @@ use Sun\BitrixModule\Command\ChangeDirectoryCommand;
 use Sun\BitrixModule\FilePath\FilePathInterface;
 use Sun\BitrixModule\Utils\DirUtils;
 
-abstract class FilesCopyInstaller extends AbstractInstallerDecorator
+abstract class AbstractFilesCopyInstaller extends AbstractInstallerDecorator
 {
     /**
      * @param FilePathInterface[] $items
@@ -64,7 +64,6 @@ abstract class FilesCopyInstaller extends AbstractInstallerDecorator
                 new ChangeDirectoryCommand($pathTo)
             ], $commands);
         }, $this->items);
-        $commands = array_filter($commands);
-        return array_merge($parentCommands, [$commands]);
+        return array_merge($parentCommands, [array_filter($commands)]);
     }
 }

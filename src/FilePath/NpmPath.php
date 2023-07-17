@@ -2,14 +2,13 @@
 
 namespace Sun\BitrixModule\FilePath;
 
-use Sun\BitrixModule\Command\BitrixBuildCommand;
 use Sun\BitrixModule\Command\NodeInstallCommand;
+use Sun\BitrixModule\Command\NpmBuildCommand;
 
-class ExtensionPath implements FilePathInterface
+class NpmPath implements FilePathInterface
 {
     public function __construct(
         private string $name,
-        private bool $isNodeExtension = false,
     ) {
     }
 
@@ -20,9 +19,9 @@ class ExtensionPath implements FilePathInterface
 
     public function getCommands(): array
     {
-        return array_merge(
-            $this->isNodeExtension ? [new NodeInstallCommand()]: [],
-            [new BitrixBuildCommand()]
-        );
+        return [
+            new NodeInstallCommand(),
+            new NpmBuildCommand(),
+        ];
     }
 }
