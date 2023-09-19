@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BitrixModule\Enum;
 
 class UserTypeEnum extends AbstractEnum

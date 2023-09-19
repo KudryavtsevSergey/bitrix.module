@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BitrixModule\FilePath;
 
 use Sun\BitrixModule\Command\NodeInstallCommand;

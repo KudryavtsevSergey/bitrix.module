@@ -1,17 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BitrixModule\Installer;
 
 use Bitrix\Highloadblock\HighloadBlockTable;
 use Bitrix\Main\Loader;
 use CUserTypeEntity;
 use Sun\BitrixModule\Exception\InternalError;
+use Sun\BitrixModule\HighLoad\UserFieldManager;
 use Sun\BitrixModule\HighLoad\HighLoadTable;
 use Sun\BitrixModule\Option\OptionService;
 use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
 class HighLoadBlockInstaller extends AbstractInstallerDecorator
 {
+    private UserFieldManager $userFieldManager;
+
     /**
      * @param string $moduleId
      * @param HighLoadTable[] $blocks
@@ -26,6 +31,7 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
     ) {
         parent::__construct($installer);
         Loader::includeModule('highloadblock');
+        $this->userFieldManager = new UserFieldManager(new CUserTypeEntity());
     }
 
     public function install(): void
@@ -34,7 +40,10 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
             $name = $block->getName();
             $highLoadBlockId = $this->createHighLoadBlock($name);
             $this->optionService->setOption($this->moduleId, $name, (string)$highLoadBlockId);
-            $this->createHighLoadFields($highLoadBlockId, $block->getProperties());
+            $this->userFieldManager->createFields(
+                BitrixPropertyUtils::getHighLoadBlockId($highLoadBlockId),
+                $block->getFields()
+            );
         }
         parent::install();
     }
@@ -45,7 +54,10 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
             $name = $block->getName();
             $highLoadBlockId = $this->optionService->getOption($this->moduleId, $name);
             if ($highLoadBlockId) {
-                $this->deleteHighLoadFields((int)$highLoadBlockId);
+                $this->userFieldManager->deleteFields(
+                    BitrixPropertyUtils::getHighLoadBlockId((int)$highLoadBlockId),
+                    $block->getFields()
+                );
                 $this->deleteHighLoadBlock((int)$highLoadBlockId);
             }
             $this->optionService->unsetOption($this->moduleId, $name);
@@ -53,26 +65,15 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
         parent::uninstall();
     }
 
-    private function deleteHighLoadFields(int $highLoadBlockId): void
-    {
-        $userType = $this->createUserType();
-        $obHl = $userType->GetList([], ['ENTITY_ID' => BitrixPropertyUtils::getHighLoadBlockId($highLoadBlockId)]);
-        while ($arHl = $obHl->Fetch()) {
-            $userType = $this->createUserType();
-            $userType->Delete($arHl['ID']);
-        }
-    }
-
     private function deleteHighLoadBlock(int $highLoadBlockId): void
     {
         $result = HighloadBlockTable::delete($highLoadBlockId);
         if (!$result->isSuccess()) {
-            $message = sprintf(
+            throw new InternalError(sprintf(
                 'Error deleting highload %s with errors %s',
                 $highLoadBlockId,
                 $result->getErrorMessages()
-            );
-            throw new InternalError($message);
+            ));
         }
     }
 
@@ -83,37 +84,12 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
             'TABLE_NAME' => strtolower($highLoadBlockName),
         ]);
         if (!$result->isSuccess()) {
-            $message = sprintf(
+            throw new InternalError(sprintf(
                 'Error creating highload %s with errors %s',
                 $highLoadBlockName,
                 implode(', ', $result->getErrorMessages())
-            );
-            throw new InternalError($message);
+            ));
         }
         return $result->getId();
-    }
-
-    public function createHighLoadFields(int $id, array $highLoadFields): void
-    {
-        $userType = $this->createUserType();
-        foreach ($highLoadFields as $highLoadField) {
-            $field = array_merge([
-                'ENTITY_ID' => BitrixPropertyUtils::getHighLoadBlockId($id),
-            ], $highLoadField);
-            if (!$userType->Add($field)) {
-                $message = sprintf(
-                    'Error creating highload field %s[%s] with errors %s',
-                    $field['ENTITY_ID'],
-                    $field['FIELD_NAME'],
-                    $userType->LAST_ERROR
-                );
-                throw new InternalError($message);
-            }
-        }
-    }
-
-    private function createUserType(): CUserTypeEntity
-    {
-        return new CUserTypeEntity();
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BitrixModule\Installer;
 
 abstract class AbstractInstallerDecorator implements InstallerInterface

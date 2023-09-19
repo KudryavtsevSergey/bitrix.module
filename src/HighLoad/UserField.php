@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BitrixModule\HighLoad;
 
 use Sun\BitrixModule\Enum\ShowFilterEnum;
@@ -7,7 +9,7 @@ use Sun\BitrixModule\Exception\InternalError;
 use Sun\BitrixModule\HighLoad\FieldSetting\AbstractFieldSettings;
 use Sun\BitrixModule\Utils\BitrixPropertyUtils;
 
-class HighLoadField implements BitrixPropertiesInterface
+class UserField implements BitrixPropertiesInterface
 {
     private const USER_FIELD_PREFIX = 'UF_';
 
@@ -52,6 +54,11 @@ class HighLoadField implements BitrixPropertiesInterface
             $message = sprintf('Field name %s must start with %s', $fieldName, self::USER_FIELD_PREFIX);
             throw new InternalError($message);
         }
+    }
+
+    public function getFieldName(): string
+    {
+        return $this->fieldName;
     }
 
     public function getProperties(): array

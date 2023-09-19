@@ -1,14 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Sun\BitrixModule\HighLoad;
 
 use Sun\BitrixModule\Exception\InternalError;
 
-class HighLoadTable implements BitrixPropertiesInterface
+class HighLoadTable
 {
     /**
      * @param string $name
-     * @param HighLoadField[] $fields
+     * @param UserField[] $fields
      */
     public function __construct(
         private string $name,
@@ -27,10 +29,8 @@ class HighLoadTable implements BitrixPropertiesInterface
         return $this->name;
     }
 
-    public function getProperties(): array
+    public function getFields(): array
     {
-        return array_map(static fn(
-            HighLoadField $highLoadField
-        ): array => $highLoadField->getProperties(), $this->fields);
+        return $this->fields;
     }
 }
