@@ -2,6 +2,7 @@
 
 use Bitrix\Main\Localization\Loc;
 use Sun\BitrixModule\Enum\OptionTypeEnum;
+use Sun\BitrixModule\Installer\AbstractStepInstaller;
 use Sun\BitrixModule\Installer\OptionsInstaller;
 use Sun\BitrixModule\Installer\SuccessRedirectInstaller;
 use Sun\BitrixModule\Option\OptionGroup;
@@ -25,7 +26,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInsta
 <form method="POST">
   <?= bitrix_sessid_post() ?>
   <input type="hidden" name="id" value="<?= $moduleId ?>">
-  <input type="hidden" name="<?= OptionsInstaller::STEP_FIELD; ?>" value="<?= OptionsInstaller::STEP_VALUE; ?>">
+  <input type="hidden" name="<?= AbstractStepInstaller::STEP_FIELD; ?>" value="<?= OptionsInstaller::STEP_VALUE; ?>">
 
   <div class="adm-detail-content-wrap">
     <div class="adm-detail-content">
@@ -33,13 +34,13 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInsta
       <div class="adm-detail-content-item-block">
         <table class="adm-detail-content-table edit-table">
           <tbody>
-          <? foreach ($optionGroups as $optionGroup): ?>
+          <?php foreach ($optionGroups as $optionGroup): ?>
             <tr class="heading">
               <td colspan="2"><b><?= $optionGroup->getName(); ?></b></td>
             </tr>
-            <? foreach ($optionGroup->getOptions() as $option): ?>
-              <? if ($option->getType() === OptionTypeEnum::HIDDEN): continue; endif; ?>
-              <? $value = OptionUtils::getOptionValue($optionValues, $option); ?>
+            <?php foreach ($optionGroup->getOptions() as $option): ?>
+              <?php if ($option->getType() === OptionTypeEnum::HIDDEN): continue; endif; ?>
+              <?php $value = OptionUtils::getOptionValue($optionValues, $option); ?>
               <tr>
                 <td class="adm-detail-content-cell-l">
                   <label for="<?= $option->getName() ?>">
@@ -47,9 +48,9 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInsta
                   </label>
                 </td>
                 <td class="adm-detail-content-cell-r">
-                  <? switch ($option->getType()):
+                  <?php switch ($option->getType()):
                     case OptionTypeEnum::TEXT: ?>
-                      <? /** @var TextOption $option */ ?>
+                      <?php /** @var TextOption $option */ ?>
                       <input
                         type="text"
                         size="30"
@@ -58,35 +59,35 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInsta
                         value="<?= $value ?>"
                         name="<?= $option->getInputName() ?>"
                       />
-                      <? break;
+                      <?php break;
                     case OptionTypeEnum::SELECT: ?>
-                      <? /** @var SelectOption $option */ ?>
+                      <?php /** @var SelectOption $option */ ?>
                       <select
                         id="<?= $option->getName() ?>"
                         name="<?= $option->getInputName() ?>"
                         class="typeselect"
-                        <? if ($option->isMultiple()): ?>multiple<? endif; ?>
+                        <?php if ($option->isMultiple()): ?>multiple<?php endif; ?>
                       >
-                        <? foreach ($option->getValues() as $optionValue): ?>
-                          <? if ($option->isMultiple()): ?>
+                        <?php foreach ($option->getValues() as $optionValue): ?>
+                          <?php if ($option->isMultiple()): ?>
                             <option
                               value="<?= $optionValue->getValue(); ?>"
-                              <? if (in_array($optionValue->getValue(), $value ?? [])): ?>selected<? endif; ?>
+                              <?php if (in_array($optionValue->getValue(), $value ?? [])): ?>selected<?php endif; ?>
                             ><?= $optionValue->getName(); ?></option>
-                          <? else: ?>
+                          <?php else: ?>
                             <option
                               value="<?= $optionValue->getValue(); ?>"
-                              <? if ($optionValue->getValue() == $value): ?>selected<? endif; ?>
+                              <?php if ($optionValue->getValue() == $value): ?>selected<?php endif; ?>
                             ><?= $optionValue->getName(); ?></option>
-                          <? endif; ?>
-                        <? endforeach; ?>
+                          <?php endif; ?>
+                        <?php endforeach; ?>
                       </select>
-                      <? break;
+                      <?php break;
                   endswitch; ?>
                 </td>
               </tr>
-            <? endforeach; ?>
-          <? endforeach; ?>
+            <?php endforeach; ?>
+          <?php endforeach; ?>
           </tbody>
         </table>
       </div>

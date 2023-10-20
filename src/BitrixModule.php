@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Sun\BitrixModule;
 
 use CModule;
-use Sun\BitrixModule\Command\CommandInterface;
 use Sun\BitrixModule\Enum\BooleanTypeEnum;
+use Sun\BitrixModule\Utils\CommandGenerator;
 use Throwable;
 
 abstract class BitrixModule extends CModule implements Module
@@ -30,7 +30,7 @@ abstract class BitrixModule extends CModule implements Module
     {
         $installer = $this->getInstaller();
         try {
-            $GLOBALS['postInstallCommand'] = $this->generateCommand($installer->getPostInstallCommands());
+            $GLOBALS['postInstallCommand'] = (new CommandGenerator($installer->getPostInstallCommands()))->generate();
             $installer->install();
         } catch (Throwable $exception) {
             $GLOBALS['moduleException'] = $exception;
@@ -47,26 +47,5 @@ abstract class BitrixModule extends CModule implements Module
     public function getModuleGroupRights(): string
     {
         return BooleanTypeEnum::NO;
-    }
-
-    private function generateCommand(array $commands): ?string
-    {
-        $commands = array_filter($commands);
-        if (empty($commands)) {
-            return null;
-        }
-        $commands = array_map(static function (array $installerCommands): string {
-            $installerCommands = array_map(static function (array $commands): string {
-                $commands = array_map(static fn(
-                    CommandInterface $command
-                ): string => $command->getCommand(), $commands);
-
-                return implode(" \\\n&& ", $commands);
-            }, $installerCommands);
-
-            return implode(" \\\n\\\n&& ", $installerCommands);
-        }, $commands);
-
-        return implode(" \\\n\\\n\\\n&& ", $commands);
     }
 }

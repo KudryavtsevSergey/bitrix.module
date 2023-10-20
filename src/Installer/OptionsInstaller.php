@@ -5,15 +5,13 @@ declare(strict_types=1);
 namespace Sun\BitrixModule\Installer;
 
 use Bitrix\Main\Application;
-use Bitrix\Main\HttpRequest;
 use CMain;
 use Sun\BitrixModule\Option\OptionGroup;
 use Sun\BitrixModule\Option\OptionService;
 use Sun\BitrixModule\Option\OptionValue;
 
-class OptionsInstaller extends AbstractInstallerDecorator
+class OptionsInstaller extends AbstractStepInstaller
 {
-    public const STEP_FIELD = 'step';
     public const STEP_VALUE = 'options';
 
     /**
@@ -33,27 +31,45 @@ class OptionsInstaller extends AbstractInstallerDecorator
         parent::__construct($installer);
     }
 
-    public function install(): void
+    protected function shouldBeInstalled(): bool
     {
         $request = Application::getInstance()->getContext()->getRequest();
-        if (check_bitrix_sessid() && $request->isPost() && $request->get(self::STEP_FIELD) === self::STEP_VALUE) {
-            $this->setOptions($request);
-            parent::install();
-        } else {
-            $title = sprintf('Setting the %s module', $this->moduleId);
-            $filePath = sprintf('%s/../../views/options.php', __DIR__);
-            $GLOBALS['moduleId'] = $this->moduleId;
-            $GLOBALS['optionGroups'] = $this->optionGroups;
-            $GLOBALS['optionValues'] = $this->getOptionValues();
+        return check_bitrix_sessid() && $request->isPost() && $request->get(self::STEP_FIELD) === self::STEP_VALUE;
+    }
 
-            $this->application->IncludeAdminFile($title, $filePath);
+    protected function makeInstall(): void
+    {
+        $request = Application::getInstance()->getContext()->getRequest();
+        foreach ($this->optionGroups as $optionGroup) {
+            foreach ($optionGroup->getOptions() as $option) {
+                $optionName = $option->getName();
+                if ($value = $request->get($optionName) ?? $option->getDefault()) {
+                    $value = $option->isMultiple() ? json_encode($value, JSON_THROW_ON_ERROR) : $value;
+                    $this->optionService->setOption($this->moduleId, $optionName, $value);
+                } else {
+                    $this->optionService->unsetOption($this->moduleId, $optionName);
+                }
+            }
         }
     }
 
-    public function uninstall(): void
+    protected function showInstall(): void
     {
-        $this->unsetOptions();
-        parent::uninstall();
+        $GLOBALS['moduleId'] = $this->moduleId;
+        $GLOBALS['optionGroups'] = $this->optionGroups;
+        $GLOBALS['optionValues'] = $this->getOptionValues();
+
+        $this->application->IncludeAdminFile(
+            sprintf('Setting the %s module', $this->moduleId),
+            sprintf('%s/../../views/options.php', __DIR__)
+        );
+    }
+
+    protected function makeUninstall(): void
+    {
+        foreach ($this->getOptionValues() as $optionValue) {
+            $this->optionService->unsetOption($this->moduleId, $optionValue->getName());
+        }
     }
 
     /**
@@ -76,25 +92,8 @@ class OptionsInstaller extends AbstractInstallerDecorator
         return $result;
     }
 
-    private function setOptions(HttpRequest $request): void
+    protected function stepValue(): string
     {
-        foreach ($this->optionGroups as $optionGroup) {
-            foreach ($optionGroup->getOptions() as $option) {
-                $optionName = $option->getName();
-                if ($value = $request->get($optionName) ?? $option->getDefault()) {
-                    $value = $option->isMultiple() ? json_encode($value, JSON_THROW_ON_ERROR) : $value;
-                    $this->optionService->setOption($this->moduleId, $optionName, $value);
-                } else {
-                    $this->optionService->unsetOption($this->moduleId, $optionName);
-                }
-            }
-        }
-    }
-
-    private function unsetOptions(): void
-    {
-        foreach ($this->getOptionValues() as $optionValue) {
-            $this->optionService->unsetOption($this->moduleId, $optionValue->getName());
-        }
+        return self::STEP_VALUE;
     }
 }
