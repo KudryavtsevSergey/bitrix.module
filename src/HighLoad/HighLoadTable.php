@@ -13,8 +13,8 @@ class HighLoadTable
      * @param UserField[] $fields
      */
     public function __construct(
-        private string $name,
-        private array $fields,
+        private readonly string $name,
+        private readonly array $fields,
     ) {
         if (!preg_match('~^\p{Lu}~u', $name)) {
             throw new InternalError(sprintf('The name %s of the highload block must start with a capital letter', $name));

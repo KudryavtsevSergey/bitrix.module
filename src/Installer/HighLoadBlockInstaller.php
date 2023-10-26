@@ -24,9 +24,9 @@ class HighLoadBlockInstaller extends AbstractInstallerDecorator
      * @param InstallerInterface $installer
      */
     public function __construct(
-        private string $moduleId,
-        private array $blocks,
-        private OptionService $optionService,
+        private readonly string $moduleId,
+        private readonly array $blocks,
+        private readonly OptionService $optionService,
         InstallerInterface $installer
     ) {
         parent::__construct($installer);

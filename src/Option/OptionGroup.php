@@ -11,8 +11,8 @@ class OptionGroup
      * @param AbstractOption[] $options
      */
     public function __construct(
-        private string $name,
-        private array $options,
+        private readonly string $name,
+        private readonly array $options,
     ) {
     }
 

@@ -9,7 +9,7 @@ use Sun\BitrixModule\Command\CommandInterface;
 class CommandGenerator
 {
     public function __construct(
-        private array $commands,
+        private readonly array $commands,
     ) {
     }
 

@@ -9,8 +9,8 @@ use Sun\BitrixModule\Command\ComposerInstallCommand;
 class ComponentPath implements FilePathInterface
 {
     public function __construct(
-        private string $name,
-        private bool $isComposerComponent = false,
+        private readonly string $name,
+        private readonly bool $isComposerComponent = false,
     ) {
     }
 

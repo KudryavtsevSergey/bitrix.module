@@ -7,8 +7,8 @@ namespace Sun\BitrixModule\Option;
 class SelectOptionItem
 {
     public function __construct(
-        private string $name,
-        private int|string $value,
+        private readonly string $name,
+        private readonly int|string $value,
     ) {
     }
 

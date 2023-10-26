@@ -7,9 +7,9 @@ namespace Sun\BitrixModule\Option;
 abstract class AbstractOption
 {
     public function __construct(
-        private string $name,
-        private array|string|null $default = null,
-        private bool $isMultiple = false
+        private readonly string $name,
+        private readonly array|string|null $default = null,
+        private readonly bool $isMultiple = false
     ) {
     }
 

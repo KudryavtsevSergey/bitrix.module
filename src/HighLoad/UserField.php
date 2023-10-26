@@ -32,22 +32,22 @@ class UserField implements BitrixPropertiesInterface
      * @param LanguageValue[] $helpMessage
      */
     public function __construct(
-        private string $fieldName,
-        private string $userType,
-        private bool $mandatory,
-        private AbstractFieldSettings $fieldSetting,
-        private bool $multiple = false,
-        private string $xmlId = '',
-        private int $sort = 500,
-        private string $showFilter = ShowFilterEnum::DO_NOT_SHOW,
-        private bool $showInList = true,
-        private bool $editInList = true,
-        private bool $isSearchable = true,
-        private array $editFormLabel = [],
-        private array $listColumnLabel = [],
-        private array $listFilterLabel = [],
-        private array $errorMessage = [],
-        private array $helpMessage = []
+        private readonly string $fieldName,
+        private readonly string $userType,
+        private readonly bool $mandatory,
+        private readonly AbstractFieldSettings $fieldSetting,
+        private readonly bool $multiple = false,
+        private readonly string $xmlId = '',
+        private readonly int $sort = 500,
+        private readonly string $showFilter = ShowFilterEnum::DO_NOT_SHOW,
+        private readonly bool $showInList = true,
+        private readonly bool $editInList = true,
+        private readonly bool $isSearchable = true,
+        private readonly array $editFormLabel = [],
+        private readonly array $listColumnLabel = [],
+        private readonly array $listFilterLabel = [],
+        private readonly array $errorMessage = [],
+        private readonly array $helpMessage = []
     ) {
         ShowFilterEnum::checkAllowedValue($showFilter);
         if (stripos($fieldName, self::USER_FIELD_PREFIX) !== 0) {

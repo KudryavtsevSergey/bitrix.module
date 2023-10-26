@@ -7,8 +7,8 @@ namespace Sun\BitrixModule;
 class Version
 {
     public function __construct(
-        private string $version,
-        private string $date,
+        private readonly string $version,
+        private readonly string $date,
     ) {
     }
 

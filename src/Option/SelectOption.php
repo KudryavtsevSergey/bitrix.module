@@ -16,7 +16,7 @@ class SelectOption extends AbstractOption
      */
     public function __construct(
         string $name,
-        private array $values,
+        private readonly array $values,
         array|string|null $default = null,
         bool $isMultiple = false
     ) {

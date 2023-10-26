@@ -7,7 +7,7 @@ namespace Sun\BitrixModule\Installer;
 class RegisterInstaller extends AbstractInstallerDecorator
 {
     public function __construct(
-        private string $moduleId,
+        private readonly string $moduleId,
         InstallerInterface $installer,
     ) {
         parent::__construct($installer);

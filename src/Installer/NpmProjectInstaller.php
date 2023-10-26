@@ -17,8 +17,8 @@ class NpmProjectInstaller extends AbstractInstallerDecorator
      * @param InstallerInterface $installer
      */
     public function __construct(
-        private string $documentRoot,
-        private string $moduleId,
+        private readonly string $documentRoot,
+        private readonly string $moduleId,
         private array $npmPaths,
         InstallerInterface $installer,
     ) {

@@ -20,8 +20,8 @@ class ExtensionsInstaller extends AbstractFilesCopyInstaller
      * @param InstallerInterface $installer
      */
     public function __construct(
-        private string $documentRoot,
-        private string $namespace,
+        private readonly string $documentRoot,
+        private readonly string $namespace,
         string $moduleId,
         array $extensions,
         CMain $application,

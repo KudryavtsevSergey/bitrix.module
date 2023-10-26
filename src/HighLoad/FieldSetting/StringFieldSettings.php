@@ -7,12 +7,12 @@ namespace Sun\BitrixModule\HighLoad\FieldSetting;
 class StringFieldSettings extends AbstractFieldSettings
 {
     public function __construct(
-        private ?string $default = null,
-        private int $size = 20,
-        private int $rows = 1,
-        private int $minLength = 0,
-        private int $maxLength = 0,
-        private ?string $regexp = null
+        private readonly ?string $default = null,
+        private readonly int $size = 20,
+        private readonly int $rows = 1,
+        private readonly int $minLength = 0,
+        private readonly int $maxLength = 0,
+        private readonly ?string $regexp = null
     ) {
     }
 

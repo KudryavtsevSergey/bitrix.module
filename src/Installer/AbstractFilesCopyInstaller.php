@@ -24,7 +24,7 @@ abstract class AbstractFilesCopyInstaller extends AbstractStepInstaller
     public function __construct(
         protected string $moduleId,
         private array $items,
-        private CMain $application,
+        private readonly CMain $application,
         InstallerInterface $installer,
     ) {
         parent::__construct($installer);

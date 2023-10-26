@@ -7,7 +7,7 @@ namespace Sun\BitrixModule\Installer;
 abstract class AbstractInstallerDecorator implements InstallerInterface
 {
     public function __construct(
-        private InstallerInterface $installer,
+        private readonly InstallerInterface $installer,
     ) {
     }
 

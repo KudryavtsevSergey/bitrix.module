@@ -9,8 +9,8 @@ use Sun\BitrixModule\Enum\LanguageEnum;
 class LanguageValue
 {
     public function __construct(
-        private string $language,
-        private string $value
+        private readonly string $language,
+        private readonly string $value
     ) {
         LanguageEnum::checkAllowedValue($language);
     }

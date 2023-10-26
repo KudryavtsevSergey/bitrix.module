@@ -22,10 +22,10 @@ class OptionsInstaller extends AbstractStepInstaller
      * @param InstallerInterface $installer
      */
     public function __construct(
-        private string $moduleId,
-        private array $optionGroups,
-        private OptionService $optionService,
-        private CMain $application,
+        private readonly string $moduleId,
+        private readonly array $optionGroups,
+        private readonly OptionService $optionService,
+        private readonly CMain $application,
         InstallerInterface $installer
     ) {
         parent::__construct($installer);

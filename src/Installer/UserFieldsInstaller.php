@@ -18,8 +18,8 @@ class UserFieldsInstaller extends AbstractInstallerDecorator
      * @param InstallerInterface $installer
      */
     public function __construct(
-        private string $entityId,
-        private array $userField,
+        private readonly string $entityId,
+        private readonly array $userField,
         InstallerInterface $installer
     ) {
         parent::__construct($installer);

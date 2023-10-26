@@ -10,7 +10,7 @@ use Sun\BitrixModule\Command\NpmBuildCommand;
 class NpmPath implements FilePathInterface
 {
     public function __construct(
-        private string $name,
+        private readonly string $name,
     ) {
     }
 

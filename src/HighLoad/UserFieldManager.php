@@ -10,7 +10,7 @@ use Sun\BitrixModule\Exception\InternalError;
 class UserFieldManager
 {
     public function __construct(
-        private CUserTypeEntity $userType,
+        private readonly CUserTypeEntity $userType,
     ) {
     }
 

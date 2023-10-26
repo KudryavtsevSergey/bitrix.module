@@ -9,8 +9,8 @@ use CMain;
 class SuccessLogInstaller implements InstallerInterface
 {
     public function __construct(
-        private string $moduleId,
-        private CMain $application,
+        private readonly string $moduleId,
+        private readonly CMain $application,
     ) {
     }
 

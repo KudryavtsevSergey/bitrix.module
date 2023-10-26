@@ -10,8 +10,8 @@ use Sun\BitrixModule\Command\NodeInstallCommand;
 class ExtensionPath implements FilePathInterface
 {
     public function __construct(
-        private string $name,
-        private bool $isNodeExtension = false,
+        private readonly string $name,
+        private readonly bool $isNodeExtension = false,
     ) {
     }
 
