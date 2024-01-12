@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sun\BitrixModule\Options;
 
 use Sun\BitrixModule\Installer\OptionsInstaller;
+use Sun\BitrixModule\Installer\StepCleanerInstaller;
 use Sun\BitrixModule\Installer\SuccessRedirectInstaller;
 use Sun\BitrixModule\Option\OptionService;
 
@@ -16,15 +17,16 @@ abstract class AbstractModuleOptions implements ModuleOptionsInterface
         $moduleId = $this->getModuleId();
 
         $successRedirectInstaller = new SuccessRedirectInstaller($moduleId, $APPLICATION);
-        $installer = new OptionsInstaller(
+        $optionsInstaller = new OptionsInstaller(
             $moduleId,
             $this->getOptionGroups(),
             new OptionService(),
             $APPLICATION,
             $successRedirectInstaller
         );
+        $stepCleanerInstaller = new StepCleanerInstaller($optionsInstaller);
 
-        $installer->install();
+        $stepCleanerInstaller->install();
     }
 
     protected abstract function getModuleId(): string;

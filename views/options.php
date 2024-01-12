@@ -2,8 +2,7 @@
 
 use Bitrix\Main\Localization\Loc;
 use Sun\BitrixModule\Enum\OptionTypeEnum;
-use Sun\BitrixModule\Installer\AbstractStepInstaller;
-use Sun\BitrixModule\Installer\OptionsInstaller;
+use Sun\BitrixModule\Installer\InstallerInterface;
 use Sun\BitrixModule\Installer\SuccessRedirectInstaller;
 use Sun\BitrixModule\Option\OptionGroup;
 use Sun\BitrixModule\Option\OptionUtils;
@@ -14,6 +13,7 @@ use Sun\BitrixModule\Option\TextOption;
 /** @var OptionGroup[] $optionGroups */
 /** @var OptionValue[] $optionValues */
 /** @var string $moduleId */
+/** @var string $stepValue */
 
 Loc::loadMessages(__FILE__);
 
@@ -26,7 +26,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInsta
 <form method="POST">
   <?= bitrix_sessid_post() ?>
   <input type="hidden" name="id" value="<?= $moduleId ?>">
-  <input type="hidden" name="<?= AbstractStepInstaller::STEP_FIELD; ?>" value="<?= OptionsInstaller::STEP_VALUE; ?>">
+  <input type="hidden" name="<?= InstallerInterface::STEP_FIELD; ?>" value="<?= $stepValue; ?>">
 
   <div class="adm-detail-content-wrap">
     <div class="adm-detail-content">

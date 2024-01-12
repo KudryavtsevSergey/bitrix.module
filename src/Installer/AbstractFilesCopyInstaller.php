@@ -53,7 +53,6 @@ abstract class AbstractFilesCopyInstaller extends AbstractStepInstaller
 
     protected function showInstall(): void
     {
-        $_SESSION['STEP'] = $this->stepValue();
         $GLOBALS['moduleId'] = $this->moduleId;
         $GLOBALS['stepValue'] = $this->stepValue();
 

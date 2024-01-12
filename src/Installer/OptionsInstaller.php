@@ -12,7 +12,7 @@ use Sun\BitrixModule\Option\OptionValue;
 
 class OptionsInstaller extends AbstractStepInstaller
 {
-    public const STEP_VALUE = 'options';
+    private const STEP_VALUE = 'options';
 
     /**
      * @param string $moduleId
@@ -58,6 +58,7 @@ class OptionsInstaller extends AbstractStepInstaller
         $GLOBALS['moduleId'] = $this->moduleId;
         $GLOBALS['optionGroups'] = $this->optionGroups;
         $GLOBALS['optionValues'] = $this->getOptionValues();
+        $GLOBALS['stepValue'] = $this->stepValue();
 
         $this->application->IncludeAdminFile(
             sprintf('Setting the %s module', $this->moduleId),

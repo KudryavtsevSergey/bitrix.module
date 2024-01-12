@@ -6,7 +6,6 @@ namespace Sun\BitrixModule\Installer;
 
 abstract class AbstractStepInstaller extends AbstractInstallerDecorator
 {
-    public const STEP_FIELD = 'step';
     private const SESSION_STEP_KEY = 'STEP';
 
     public function __construct(InstallerInterface $installer)
@@ -26,8 +25,8 @@ abstract class AbstractStepInstaller extends AbstractInstallerDecorator
             $this->deleteCurrentStep();
             parent::install();
         } else {
-            $this->showInstall();
             $this->saveCurrentStep();
+            $this->showInstall();
         }
     }
 
@@ -70,18 +69,18 @@ abstract class AbstractStepInstaller extends AbstractInstallerDecorator
     {
     }
 
-    private function isCurrentStep(): bool
+    public function isCurrentStep(): bool
     {
         $value = $_SESSION[self::SESSION_STEP_KEY] ?? null;
         return $value === null || $value === $this->stepValue();
     }
 
-    private function saveCurrentStep(): void
+    public function saveCurrentStep(): void
     {
         $_SESSION[self::SESSION_STEP_KEY] = $this->stepValue();
     }
 
-    private function deleteCurrentStep(): void
+    public function deleteCurrentStep(): void
     {
         unset($_SESSION[self::SESSION_STEP_KEY]);
     }

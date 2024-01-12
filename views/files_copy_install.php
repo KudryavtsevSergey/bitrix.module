@@ -3,7 +3,7 @@
 
 use Bitrix\Main\Localization\Loc;
 use Sun\BitrixModule\Installer\AbstractFilesCopyInstaller;
-use Sun\BitrixModule\Installer\AbstractStepInstaller;
+use Sun\BitrixModule\Installer\InstallerInterface;
 use Sun\BitrixModule\Installer\SuccessRedirectInstaller;
 
 /** @var string $moduleId */
@@ -20,7 +20,7 @@ if (isset($_SESSION[$moduleId]) && $_SESSION[$moduleId] === SuccessRedirectInsta
 <form method="POST">
   <?= bitrix_sessid_post() ?>
   <input type="hidden" name="id" value="<?= $moduleId ?>">
-  <input type="hidden" name="<?= AbstractStepInstaller::STEP_FIELD; ?>" value="<?= $stepValue; ?>">
+  <input type="hidden" name="<?= InstallerInterface::STEP_FIELD; ?>" value="<?= $stepValue; ?>">
 
   <div class="adm-detail-content-wrap">
     <div class="adm-detail-content">
